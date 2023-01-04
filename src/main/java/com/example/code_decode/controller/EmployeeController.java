@@ -5,6 +5,7 @@ import com.example.code_decode.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -54,5 +55,10 @@ public class EmployeeController {
     @GetMapping("/find-first-duplicate-employee-name-using-collection-frequency")
     public ResponseEntity<?> findFirstDuplicateEmployeeNameUsingCollectionFrequency(){
         return ResponseEntity.ok(employeeService.findFirstDumplicateEmployeeNameUsingCollectionFrequency());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<String> findEmployeeById(@PathVariable Long id){
+        return ResponseEntity.ok(employeeService.findEmployeeById(id));
     }
 }

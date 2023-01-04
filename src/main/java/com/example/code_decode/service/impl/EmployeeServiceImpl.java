@@ -1,5 +1,6 @@
 package com.example.code_decode.service.impl;
 
+import com.example.code_decode.domain.entity.postgres.EmployeeMasterEntity;
 import com.example.code_decode.domain.model.response.EmployeeResponse;
 import com.example.code_decode.repository.EmployeeRepository;
 import com.example.code_decode.service.EmployeeService;
@@ -49,7 +50,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Map<String, Long> groupByNames() {
         log.info("EmployeeServiceImpl:groupByNames: Grouping on the basis of name of the employee");
         return employeeRepository.findAll().stream().collect(Collectors
-                .groupingBy(employeeMasterEntity -> employeeMasterEntity.getName(),Collectors.counting()));
+                .groupingBy(employeeMasterEntity -> employeeMasterEntity.getName(), Collectors.counting()));
     }
 
     @Override
@@ -57,21 +58,39 @@ public class EmployeeServiceImpl implements EmployeeService {
         log.info("EmployeeServiceImpl:groupByNames_2: Grouping on the basis of name of the employee");
         List<String> names = employeeRepository.findAll().stream().map(employeeMasterEntity -> employeeMasterEntity.getName()).toList();
         return names.stream().collect(Collectors
-                .groupingBy(Function.identity(),Collectors.counting()));
+                .groupingBy(Function.identity(), Collectors.counting()));
     }
 
     @Override
     public String findFirstDumplicateEmployeeName() {
         log.info("EmployeeServiceImpl:groupByNames_2: Finding first duplicate employee name");
         List<String> names = employeeRepository.findAll().stream().map(employeeMasterEntity -> employeeMasterEntity.getName()).toList();
-        Map<String,Long> employeeNameMap = names.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
-        return employeeNameMap.entrySet().stream().filter(entry-> entry.getValue()>1l).findFirst().get().getKey();
+        Map<String, Long> employeeNameMap = names.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        return employeeNameMap.entrySet().stream().filter(entry -> entry.getValue() > 1l).findFirst().get().getKey();
     }
 
     @Override
     public String findFirstDumplicateEmployeeNameUsingCollectionFrequency() {
         log.info("EmployeeServiceImpl:groupByNames_2: Finding first duplicate employee name using Collections.frequency()");
         List<String> names = employeeRepository.findAll().stream().map(employeeMasterEntity -> employeeMasterEntity.getName()).toList();
-        return names.stream().filter(name-> Collections.frequency(names,name)>1).findFirst().get();
+        return names.stream().filter(name -> Collections.frequency(names, name) > 1).findFirst().get();
+    }
+
+    @Override
+    public String findEmployeeById(Long id) {
+        log.info("EmployeeServiceImpl:findEmployeeById: Finding employee in ms_employee with id {} ", id);
+        String name = null;
+        name = employeeRepository.findById(id).orElse(getDefaultEmployee()).getName();
+        name = Optional.ofNullable(employeeRepository.findById(id).get().getName()).orElseGet(()-> getDefaultEmployee().getName());
+        return name;
+    }
+
+
+    private static EmployeeMasterEntity getDefaultEmployee() {
+        EmployeeMasterEntity employeeMasterEntity = new EmployeeMasterEntity();
+        employeeMasterEntity.setAge(20);
+        employeeMasterEntity.setId(1l);
+        employeeMasterEntity.setName("Kumar Aditya");
+        return employeeMasterEntity;
     }
 }

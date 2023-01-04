@@ -20,4 +20,6 @@ public interface EmployeeService {
     String findFirstDumplicateEmployeeName();
 
     String findFirstDumplicateEmployeeNameUsingCollectionFrequency();
+
+    String findEmployeeById(Long id);
 }
