@@ -16,4 +16,8 @@ public interface EmployeeService {
 
     Map<String,Long> groupByNames();
     Map<String,Long> groupByNames_2();
+
+    String findFirstDumplicateEmployeeName();
+
+    String findFirstDumplicateEmployeeNameUsingCollectionFrequency();
 }

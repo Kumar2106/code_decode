@@ -59,4 +59,19 @@ public class EmployeeServiceImpl implements EmployeeService {
         return names.stream().collect(Collectors
                 .groupingBy(Function.identity(),Collectors.counting()));
     }
+
+    @Override
+    public String findFirstDumplicateEmployeeName() {
+        log.info("EmployeeServiceImpl:groupByNames_2: Finding first duplicate employee name");
+        List<String> names = employeeRepository.findAll().stream().map(employeeMasterEntity -> employeeMasterEntity.getName()).toList();
+        Map<String,Long> employeeNameMap = names.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
+        return employeeNameMap.entrySet().stream().filter(entry-> entry.getValue()>1l).findFirst().get().getKey();
+    }
+
+    @Override
+    public String findFirstDumplicateEmployeeNameUsingCollectionFrequency() {
+        log.info("EmployeeServiceImpl:groupByNames_2: Finding first duplicate employee name using Collections.frequency()");
+        List<String> names = employeeRepository.findAll().stream().map(employeeMasterEntity -> employeeMasterEntity.getName()).toList();
+        return names.stream().filter(name-> Collections.frequency(names,name)>1).findFirst().get();
+    }
 }

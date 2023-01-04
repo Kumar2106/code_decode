@@ -45,4 +45,14 @@ public class EmployeeController {
     public ResponseEntity<?> groupByNames_2(){
         return ResponseEntity.ok(employeeService.groupByNames());
     }
+
+    @GetMapping("/find-first-duplicate-employee-name")
+    public ResponseEntity<?> findFirstDuplicateEmployeeName(){
+        return ResponseEntity.ok(employeeService.findFirstDumplicateEmployeeName());
+    }
+
+    @GetMapping("/find-first-duplicate-employee-name-using-collection-frequency")
+    public ResponseEntity<?> findFirstDuplicateEmployeeNameUsingCollectionFrequency(){
+        return ResponseEntity.ok(employeeService.findFirstDumplicateEmployeeNameUsingCollectionFrequency());
+    }
 }
