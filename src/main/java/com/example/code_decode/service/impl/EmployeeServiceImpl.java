@@ -4,7 +4,6 @@ import com.example.code_decode.domain.model.response.EmployeeResponse;
 import com.example.code_decode.repository.EmployeeRepository;
 import com.example.code_decode.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +12,12 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    @Autowired
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
+
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
+
     @Override
     public List<EmployeeResponse> getAllEmployee() {
         log.info("EmployeeServiceImpl:getAllEmployee: Fetching all the employee from the db");
