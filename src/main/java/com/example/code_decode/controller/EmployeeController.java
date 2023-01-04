@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/employee")
@@ -19,5 +20,29 @@ public class EmployeeController {
     @GetMapping("/")
     public ResponseEntity<List<EmployeeResponse>> getAllEmployee(){
         return ResponseEntity.ok(employeeService.getAllEmployee());
+    }
+
+    @GetMapping("/names")
+    public ResponseEntity<List<String>> getNames(){
+        return ResponseEntity.ok(employeeService.getNames());
+    }
+
+    @GetMapping("/unique-names")
+    public ResponseEntity<Set<String>> getNonDuplicateNames(){
+        return ResponseEntity.ok(employeeService.getNonDuplicateNames());
+    }
+
+    @GetMapping("/duplicate-names")
+    public ResponseEntity<Set<String>> getDuplicateNames(){
+        return ResponseEntity.ok(employeeService.getDuplicateNames());
+    }
+
+    @GetMapping("/group-by-name")
+    public ResponseEntity<?> groupByNames(){
+        return ResponseEntity.ok(employeeService.groupByNames());
+    }
+    @GetMapping("/group-by-name-2")
+    public ResponseEntity<?> groupByNames_2(){
+        return ResponseEntity.ok(employeeService.groupByNames());
     }
 }
