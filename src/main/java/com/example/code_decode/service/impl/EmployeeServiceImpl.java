@@ -85,6 +85,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         return name;
     }
 
+    @Override
+    public List<?> ageInDescendingOrder() {
+        log.info("EmployeeServiceImpl:ageInDescendingOrder: Creating List of ages of the employee in descending order");
+        return employeeRepository.findAll().stream().map(employeeMasterEntity -> employeeMasterEntity.getAge()).filter(Objects::nonNull).sorted(Collections.reverseOrder()).limit(3).toList();
+    }
+
 
     private static EmployeeMasterEntity getDefaultEmployee() {
         EmployeeMasterEntity employeeMasterEntity = new EmployeeMasterEntity();

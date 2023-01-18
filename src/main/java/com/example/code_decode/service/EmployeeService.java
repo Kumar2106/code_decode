@@ -22,4 +22,6 @@ public interface EmployeeService {
     String findFirstDumplicateEmployeeNameUsingCollectionFrequency();
 
     String findEmployeeById(Long id);
+
+    List<?> ageInDescendingOrder();
 }

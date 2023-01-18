@@ -61,4 +61,9 @@ public class EmployeeController {
     public ResponseEntity<String> findEmployeeById(@PathVariable Long id){
         return ResponseEntity.ok(employeeService.findEmployeeById(id));
     }
+
+    @GetMapping("/age-in-descending-order")
+    public ResponseEntity<?> ageInDescendingOrder(){
+        return ResponseEntity.ok(employeeService.ageInDescendingOrder());
+    }
 }
